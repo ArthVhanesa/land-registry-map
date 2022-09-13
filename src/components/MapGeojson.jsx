@@ -6,7 +6,7 @@ import GeojsonLayer from './GeojsonLayer';
 import CoordInsert from './CoordInsert';
 import '../css/Map.css';
 
-// указываем путь к файлам marker
+// specify the path to the marker files
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 
 class MapComponent extends React.Component {
@@ -70,7 +70,8 @@ class MapComponent extends React.Component {
         {this.state.geojsonvisible && 
           <GeojsonLayer url="geojson.json" />
         }
-<GeojsonLayer url="https://storage.googleapis.com/mapsdevsite/json/google.json"/>
+        <GeojsonLayer url="https://storage.googleapis.com/mapsdevsite/json/google.json"/>
+        <GeojsonLayer url="https://api.npoint.io/69fa3f6053a4172c0089"/>
         <CoordInsert onllzChange={this.onCoordInsertChange} />
 
         <Marker position={center}>

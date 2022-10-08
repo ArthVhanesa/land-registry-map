@@ -1,9 +1,7 @@
 import React from "react";
 import L from 'leaflet';
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
-import Basemap from './Basemaps';
 import GeojsonLayer from './GeojsonLayer';
-import CoordInsert from './CoordInsert';
 import '../css/Map.css';
 
 // specify the path to the marker files
@@ -15,31 +13,9 @@ class MapComponent extends React.Component {
     lng: 37.530865,
     zoom: 10,
     basemap: 'osm',
-
-    geojsonvisible: false,
+    geojsonvisible: true,
     visibleModal: false,
   };
-
-  onCoordInsertChange = (lat, long, z) => {
-    this.setState({
-      lat: lat,
-      lng: long,
-      zoom: z,
-    });
-  }
-
-  onBMChange = (bm) => {
-    this.setState({
-      basemap: bm
-    });
-  }
-
-  onGeojsonToggle = (e) => {
-    
-    this.setState({
-      geojsonvisible: e.currentTarget.checked
-    });
-  }
 
   render() {
     var center = [this.state.lat, this.state.lng];
@@ -54,33 +30,13 @@ class MapComponent extends React.Component {
 
     return (
       <Map zoom={z} center={center}>
-        <TileLayer
-          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url={basemapsDict[this.state.basemap]}
-        />
-        <Basemap basemap={this.state.basemap} onChange={this.onBMChange} />
-
-        <div className="geojson-toggle">
-          <label htmlFor="layertoggle">Toggle Geojson </label>
-          <input type="checkbox"
-            name="layertoggle" id="layertoggle"
-            value={this.state.geojsonvisible} onChange={this.onGeojsonToggle} />
-        </div>
-        
         {this.state.geojsonvisible && 
           <GeojsonLayer url="geojson.json" />
         }
         <GeojsonLayer url="https://storage.googleapis.com/mapsdevsite/json/google.json"/>
-        <GeojsonLayer url="https://api.npoint.io/69fa3f6053a4172c0089"/>
-        <CoordInsert onllzChange={this.onCoordInsertChange} />
-
-        <Marker position={center}>
-          <Popup>
-            Широта: {this.state.lat}<br/>
-            Долгота: {this.state.lng}<br/>
-            Масштаб: {this.state.zoom}
-          </Popup>
-        </Marker>
+        <GeojsonLayer url="https://api.npoint.io/69fa3f6053a4172c0089" />
+        {/* abhyuday json */}
+        <GeojsonLayer url="https://api.npoint.io/f3c1b6212057e7b8155c"/>
       </Map>
     );
   }
